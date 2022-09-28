@@ -11,25 +11,58 @@ struct ContentView: View {
     var friends = [Friend.example1, Friend.example2, Friend.example3, Friend.example4, Friend.example5]
     
     @State private var selectedFriend = [false, false, false, false, false]
+    let offset = 70
     
     var body: some View {
         NavigationStack {
             ZStack {
-                ForEach(friends.indices, id: \.self) { index in
-                    FriendCardView(friend: friends[index], selected: $selectedFriend[index])
-                        /* .onTapGesture {
-                            for var friend in selectedFriend {
-                                if friend {
-                                    friend = false
-                                }
-                            }
-                            selectedFriend[index] = true
-                        } */
-                        .offset(y: CGFloat(index * -70))
+                VStack {
+                    HStack {
+                        Text("friend.li")
+                            .font(.title.bold())
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    
+                    Spacer()
                 }
-                .offset(y: CGFloat(friends.count * 40 / 2))
+                
+                ZStack {
+                    ForEach(0..<friends.count, id: \.self) { index in
+                        FriendCardView(friend: friends[index])
+                            .padding()
+                            .onTapGesture {
+                                print(index)
+                            }
+                            .offset(y: CGFloat(index * -1 * offset))
+                    }
+                }
+                .offset(y: CGFloat(friends.count * offset))
             }
-            .navigationBarTitle("Friend.li")
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        print("Friends view")
+                    } label: {
+                        Label("Friends", systemImage: "person.3.sequence")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.ultimateGreen)
+                }
+                
+                ToolbarItem {
+                    Circle()
+                        .stroke(Color.ultimateGreen)
+                        .frame(width: 48, height: 48)
+                        .overlay(
+                            Image("me")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .cornerRadius(40)
+                        )
+                }
+            }
         }
     }
 }

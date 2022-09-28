@@ -9,9 +9,14 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static let xanadu = Color("Xanadu")
-    static let springGreen = Color("SpringGreen")
-    static let maizeCrayola = Color("MaizeCrayola")
-    static let blueViolet = Color("BlueViolet")
-    static let columbiaBlue = Color("ColumbiaBlue")
+    static let ultimateGreen = Color("ultimateGreen")
+    static let friendliGreen = Color("friendliGreen")
+    static let friendliTeal = Color("friendliTeal")
+    static let friendliBlue = Color("friendliBlue")
+    static let friendliIndigo = Color("friendliIndigo")
+    static let friendliPurple = Color("friendliPurple")
+    static let friendliPink = Color("friendliPink")
+    static let friendliRed = Color("friendliRed")
+    static let friendliOrange = Color("friendliOrange")
+    static let friendliYellow = Color("friendliYellow")
 }
