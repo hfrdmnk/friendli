@@ -7,10 +7,33 @@
 
 import SwiftUI
 
+
+enum Position {
+    case top, bottom
+}
+
+extension View {
+    func stacked(at index: Int, in total: Int, atThe position: Position? = nil) -> some View {
+        
+        guard let position else {
+            let offset = Double(total - index)
+            return self.offset(x: 0, y: offset * 70)
+        }
+        
+        if position == .top {
+            return self.offset(x: 0, y: -250)
+        } else if position == .bottom {
+            return self.offset(x: 0, y: 700)
+        }
+        
+        return self.offset(x: 0, y: 0)
+    }
+}
+
 struct ContentView: View {
     var friends = [Friend.example1, Friend.example2, Friend.example3, Friend.example4, Friend.example5]
     
-    @State private var selectedFriend = [false, false, false, false, false]
+    @State private var selectedFriend = [true, true, true, true, true]
     let offset = 70
     
     var body: some View {
@@ -31,21 +54,29 @@ struct ContentView: View {
                 ZStack {
                     ForEach(0..<friends.count, id: \.self) { index in
                         FriendCardView(friend: friends[index])
-                            .padding()
                             .onTapGesture {
+                                /* if selectedFriend[index] {
+                                    selectedFriend[index] = false
+                                } else {
+                                    selectedFriend = Array<Bool>(repeating: false, count: friends.count)
+                                    selectedFriend[index] = true
+                                }
+                                
+                                print(selectedFriend) */
                                 print(index)
                             }
-                            .offset(y: CGFloat(index * -1 * offset))
+                            .stacked(at: index, in: friends.count)
+                            .blur(radius: !selectedFriend[index] ? 4 : 0)
+                            .padding(.horizontal, !selectedFriend[index] ? 16 : 0)
                     }
                 }
-                .offset(y: CGFloat(friends.count * offset))
             }
             .toolbar {
                 ToolbarItem {
                     Button {
                         print("Friends view")
                     } label: {
-                        Label("Friends", systemImage: "person.3.sequence")
+                        Label("Friends", systemImage: "person.2")
                     }
                     .buttonStyle(.bordered)
                     .tint(.ultimateGreen)
